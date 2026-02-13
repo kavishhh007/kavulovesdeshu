@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Kavish ❤️ Deshu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f4c81, #4facfe);
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+.screen { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; text-align: center; padding: 20px; }
+.active { display: flex; }
+.btn {
+  padding: 14px 28px;
+  border-radius: 30px;
+  border: none;
+  background: white;
+  color: #0f4c81;
+  font-size: 18px;
+  margin: 12px;
+  cursor: pointer;
+  touch-action: manipulation; /* mobile tap works instantly */
+}
+.teddies { font-size: 80px; margin-bottom: 20px; }
+.no {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%,0);
+  transition: all 0.3s ease;
+}
+.heart { position: absolute; font-size: 22px; pointer-events: none; }
+.card {
+  background: rgba(255,255,255,0.15);
+  padding: 25px;
+  border-radius: 20px;
+  max-width: 90%;
+  max-height: 80%;
+  overflow-y: auto;
+}
+</style>
+</head>
+<body>
+
+<!-- Screens -->
+<div id="intro" class="screen active">
+  <div class="teddies">🧸🤍🧸</div>
+  <h2>click here for more kalesh</h2>
+  <button class="btn" id="bestBtn">kavish is the best</button>
+</div>
+
+<div id="question" class="screen">
+  <h1>Deshu 💙</h1>
+  <h2>Will you be my Valentine?</h2>
+  <button class="btn" id="yesBtn">YES 💙</button>
+  <button class="btn no" id="noBtn">NO 👹</button>
+  <p id="noMsg" style="margin-top:20px;"></p>
+</div>
+
+<div id="final" class="screen">
+  <div class="card">
+    <p>💌 Happy valentines honey 😘🥰… [truncated]</p>
+  </div>
+</div>
+
+<!-- Audio -->
+<audio id="music" loop src="https://cdn.pixabay.com/audio/2022/03/15/audio_5a0b1fae28.mp3"></audio>
+<audio id="boing" src="https://cdn.pixabay.com/audio/2022/03/15/audio_aa8d3c9f89.mp3"></audio>
+
+<script>
+// Floating hearts
+for (let i=0;i<10;i++){
+  let h = document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💙";
+  h.style.left=Math.random()*100+"vw";
+  h.style.top=Math.random()*100+"vh";
+  document.body.appendChild(h);
+}
+
+// Elements
+const intro = document.getElementById("intro");
+const question = document.getElementById("question");
+const final = document.getElementById("final");
+const music = document.getElementById("music");
+const boing = document.getElementById("boing");
+const bestBtn = document.getElementById("bestBtn");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const noMsg = document.getElementById("noMsg");
+
+let grow = 1;
+let noMessages = ["Try again cutie", "Not today honey", "Almost!", "Better luck next time", "Nice try princess"];
+
+// Start question on mobile tap
+bestBtn.addEventListener("touchend", function(e){
+  e.preventDefault();
+  intro.classList.remove("active");
+  question.classList.add("active");
+  music.volume = 0.3;
+  music.play();
+}, {passive:false});
+
+// NO button dodge
+function moveNoButton() {
+  boing.play();
+  grow += 0.1;
+  bestBtn.style.transform = `scale(${grow})`;
+
+  const maxX = window.innerWidth - noBtn.offsetWidth;
+  const maxY = window.innerHeight - noBtn.offsetHeight;
+
+  noBtn.style.left = Math.random() * maxX + "px";
+  noBtn.style.top = Math.random() * maxY + "px";
+
+  noMsg.innerText = noMessages[Math.floor(Math.random()*noMessages.length)];
+}
+
+noBtn.addEventListener("touchstart", moveNoButton, {passive:true});
+
+// YES button
+yesBtn.addEventListener("touchend", function(e){
+  e.preventDefault();
+  question.classList.remove("active");
+  final.classList.add("active");
+}, {passive:false});
+
+</script>
+</body>
+</html>
