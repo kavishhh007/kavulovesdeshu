@@ -25,12 +25,16 @@ body {
 .teddies {
   font-size:80px; display:flex; justify-content:center;
   animation: hugkiss 2s infinite alternate ease-in-out;
-  will-change: transform;
-  backface-visibility: hidden;
-  transform: translateZ(0);
+  -webkit-animation: hugkiss 2s infinite alternate ease-in-out;
+  will-change: transform; backface-visibility:hidden; transform:translateZ(0);
 }
 
 @keyframes hugkiss {
+  0% { transform: translate3d(0,0,0) scale(1); }
+  50% { transform: translate3d(5px,0,0) scale(1.1) rotate(5deg); }
+  100% { transform: translate3d(0,0,0) scale(1); }
+}
+@-webkit-keyframes hugkiss {
   0% { transform: translate3d(0,0,0) scale(1); }
   50% { transform: translate3d(5px,0,0) scale(1.1) rotate(5deg); }
   100% { transform: translate3d(0,0,0) scale(1); }
@@ -39,19 +43,19 @@ body {
 .no {
   position:absolute; top:65%; left:50%; transform:translate(-50%,0);
   transition: all 0.3s ease;
-  will-change: transform;
-  backface-visibility: hidden;
-  transform: translateZ(0);
+  will-change: transform; backface-visibility:hidden; transform:translateZ(0);
 }
 
 .heart {
   position:absolute; font-size:22px; pointer-events:none;
-  will-change: transform;
-  backface-visibility: hidden;
-  transform: translateZ(0);
+  will-change: transform; backface-visibility:hidden; transform:translateZ(0);
 }
 
 @keyframes float {
+  0% { transform: translate3d(0,100px,0) scale(1); opacity:0; }
+  100% { transform: translate3d(0,-50px,0) scale(1.2); opacity:1; }
+}
+@-webkit-keyframes float {
   0% { transform: translate3d(0,100px,0) scale(1); opacity:0; }
   100% { transform: translate3d(0,-50px,0) scale(1.2); opacity:1; }
 }
@@ -63,6 +67,10 @@ body {
 }
 
 @keyframes confettiFall {
+  0% { transform: translate3d(0,-10px,0) rotate(0deg); }
+  100% { transform: translate3d(0,100vh,0) rotate(360deg); }
+}
+@-webkit-keyframes confettiFall {
   0% { transform: translate3d(0,-10px,0) rotate(0deg); }
   100% { transform: translate3d(0,100vh,0) rotate(360deg); }
 }
@@ -97,81 +105,78 @@ body {
 
 <script>
 // Floating hearts
-for (let i=0;i<10;i++){
+for(let i=0;i<10;i++){
   let h = document.createElement("div");
   h.className="heart";
   h.innerHTML="💙";
-  const w = window.innerWidth;
-  const hgt = window.innerHeight;
-  h.style.left = Math.random()*w + "px";
-  h.style.top = Math.random()*hgt + "px";
-  h.style.animation = `float ${4+Math.random()*3}s linear infinite`;
+  const w=window.innerWidth, hgt=window.innerHeight;
+  h.style.left=Math.random()*w+"px";
+  h.style.top=Math.random()*hgt+"px";
+  h.style.animation=`float ${4+Math.random()*3}s linear infinite`;
+  h.style.webkitAnimation=`float ${4+Math.random()*3}s linear infinite`;
   document.body.appendChild(h);
 }
 
 // Elements
-const intro = document.getElementById("intro");
-const question = document.getElementById("question");
-const final = document.getElementById("final");
-const music = document.getElementById("music");
-const boing = document.getElementById("boing");
-const bestBtn = document.getElementById("bestBtn");
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
-const noMsg = document.getElementById("noMsg");
+const intro=document.getElementById("intro");
+const question=document.getElementById("question");
+const final=document.getElementById("final");
+const music=document.getElementById("music");
+const boing=document.getElementById("boing");
+const bestBtn=document.getElementById("bestBtn");
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
+const noMsg=document.getElementById("noMsg");
 
-let grow = 1;
-let noMessages = ["Try again cutie","Not today honey","Almost!","Better luck next time","Nice try princess"];
+let grow=1;
+let noMessages=["Try again cutie","Not today honey","Almost!","Better luck next time","Nice try princess"];
 
-// Start question screen (mobile & desktop)
-bestBtn.addEventListener("click", startQuestion);
-bestBtn.addEventListener("touchend", startQuestion,{passive:false});
-
+// Start question
 function startQuestion(e){
-  if(e.type==="touchend") e.preventDefault();
+  e.preventDefault();
   intro.classList.remove("active");
   question.classList.add("active");
-  music.volume = 0.3;
-  music.play();
+  if(music.paused){ music.volume=0.3; music.play().catch(()=>{}); }
 }
+bestBtn.addEventListener("click",startQuestion);
+bestBtn.addEventListener("touchend",startQuestion,{passive:false});
 
 // NO button dodge
 function moveNoButton(){
   boing.play();
-  grow += 0.1;
-  bestBtn.style.transform = `scale(${grow})`;
-  const maxX = window.innerWidth - noBtn.offsetWidth;
-  const maxY = window.innerHeight - noBtn.offsetHeight;
-  noBtn.style.left = Math.random()*maxX + "px";
-  noBtn.style.top = Math.random()*maxY + "px";
-  noMsg.innerText = noMessages[Math.floor(Math.random()*noMessages.length)];
+  grow+=0.1;
+  bestBtn.style.transform=`scale(${grow})`;
+  const maxX=window.innerWidth-noBtn.offsetWidth;
+  const maxY=window.innerHeight-noBtn.offsetHeight;
+  noBtn.style.left=Math.random()*maxX+"px";
+  noBtn.style.top=Math.random()*maxY+"px";
+  noMsg.innerText=noMessages[Math.floor(Math.random()*noMessages.length)];
 }
-
-noBtn.addEventListener("mouseenter", moveNoButton);
-noBtn.addEventListener("touchstart", moveNoButton,{passive:true});
+noBtn.addEventListener("mouseenter",moveNoButton);
+noBtn.addEventListener("touchstart",moveNoButton,{passive:true});
 
 // YES button
-yesBtn.addEventListener("click", showFinal);
-yesBtn.addEventListener("touchend", showFinal,{passive:false});
-
 function showFinal(e){
-  if(e.type==="touchend") e.preventDefault();
+  e.preventDefault();
   question.classList.remove("active");
   final.classList.add("active");
   confetti("💋");
 }
+yesBtn.addEventListener("click",showFinal);
+yesBtn.addEventListener("touchend",showFinal,{passive:false});
 
 // Confetti
 function confetti(emoji){
   for(let i=0;i<20;i++){
-    let e = document.createElement("div");
+    let e=document.createElement("div");
     e.innerHTML=emoji;
     e.style.position="fixed";
-    e.style.left = Math.random()*window.innerWidth+"px";
-    e.style.top = "-10px";
+    e.style.left=Math.random()*window.innerWidth+"px";
+    e.style.top="-10px";
     e.style.fontSize="24px";
     e.style.pointerEvents="none";
     e.style.animation="confettiFall 3s linear forwards";
+    e.style.webkitAnimation="confettiFall 3s linear forwards";
     document.body.appendChild(e);
     setTimeout(()=>e.remove(),3000);
   }
