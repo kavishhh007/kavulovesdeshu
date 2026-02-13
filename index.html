@@ -5,47 +5,61 @@
 <title>Kavish ❤️ Deshu</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* { box-sizing: border-box; font-family: 'Poppins', sans-serif; margin:0; padding:0; }
 body {
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height:100vh; display:flex; justify-content:center; align-items:center;
   background: linear-gradient(135deg, #0f4c81, #4facfe);
-  color: white;
-  font-family: 'Poppins', sans-serif;
-  position: relative;
-  overflow: hidden;
+  color:white; overflow:hidden; position:relative;
 }
-.screen { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; text-align: center; padding: 20px; }
-.active { display: flex; }
+
+.screen { display:none; flex-direction:column; align-items:center; justify-content:center; width:100%; height:100%; text-align:center; padding:20px; }
+.active { display:flex; }
+
 .btn {
-  padding: 14px 28px;
-  border-radius: 30px;
-  border: none;
-  background: white;
-  color: #0f4c81;
-  font-size: 18px;
-  margin: 12px;
-  cursor: pointer;
-  touch-action: manipulation; /* mobile tap works instantly */
+  padding:14px 28px; border-radius:30px; border:none;
+  background:white; color:#0f4c81; font-size:18px; margin:12px;
+  cursor:pointer; transition:0.3s; touch-action: manipulation;
 }
-.teddies { font-size: 80px; margin-bottom: 20px; }
+.btn:hover { transform: scale(1.1); }
+
+.teddies {
+  font-size:80px; display:flex; justify-content:center;
+  animation: hugkiss 2s infinite alternate ease-in-out;
+  will-change: transform;
+}
+
+@keyframes hugkiss {
+  0% { transform: scale(1) translateX(0); }
+  50% { transform: scale(1.1) translateX(5px) rotate(5deg); }
+  100% { transform: scale(1) translateX(0); }
+}
+
 .no {
-  position: absolute;
-  top: 65%;
-  left: 50%;
-  transform: translate(-50%,0);
+  position:absolute; top:65%; left:50%; transform:translate(-50%,0);
   transition: all 0.3s ease;
 }
-.heart { position: absolute; font-size: 22px; pointer-events: none; }
+
+.heart {
+  position:absolute; font-size:22px; pointer-events:none;
+  will-change: transform;
+}
+
+@keyframes float {
+  0% { transform: translate3d(0, 100px,0) scale(1); opacity:0; }
+  100% { transform: translate3d(0,-50px,0) scale(1.2); opacity:1; }
+}
+
 .card {
   background: rgba(255,255,255,0.15);
-  padding: 25px;
-  border-radius: 20px;
-  max-width: 90%;
-  max-height: 80%;
-  overflow-y: auto;
+  padding:25px; border-radius:20px;
+  max-width:90%; max-height:80%; overflow-y:auto;
+}
+
+@keyframes confettiFall {
+  0% { transform: translate3d(0,-10px,0) rotate(0deg); }
+  100% { transform: translate3d(0,100vh,0) rotate(360deg); }
 }
 </style>
 </head>
@@ -63,16 +77,12 @@ body {
   <h2>Will you be my Valentine?</h2>
   <button class="btn" id="yesBtn">YES 💙</button>
   <button class="btn no" id="noBtn">NO 👹</button>
-  <p id="noMsg" style="margin-top:20px;"></p>
+  <p id="noMsg" style="margin-top:20px;font-size:18px;"></p>
 </div>
 
 <div id="final" class="screen">
   <div class="card">
-    <p>Happy valentines honey😘🥰😘🥰…..i love you so fucking much and i can bet ke tane idea bhi nathi ke mane tu ketli game che deshu….i love you etlu badhu ke i can put my FOOD aside for you just to see you or talk to you(esp listen to you yap🙂‍↔️🙂‍↔️🙂‍↔️🙂‍↔️) you have been the perfect girlfriend and the person who is really like really really really bauj imp to me. without you my life is like cheesecake but no sugar😔….ramen but no spice😲….pizza but no cheese😠…..burger but no patty😵‍💫…..pasta but no olives😬….tara vagar it feels like pani puri but no sukha puri(everything incomplete🥲🥲🥲)
-
-This will be our 3rd valentine’s together and as they say teen teegda kaam bigda so i promise ke ave je kharab thavanu che ea thase aapda vache na badha obstacles jode🫣🫣🫣….misunderstanding patse, hu tari a-z vastuo sunis, ofc mari deshu will come first badhij vastuo ma, no selfish kavish,all love no hate, everything will be all good….since uk ke past 8-10 divas thi badhu fucked up che….enu let us patch up again baby🥹🥹🥹🥹🥹….i cannot see you hurt….please forgive me deshu and honestly answer me ke will you be my valentine sweetheart ?😙 i want to make you believe in love again🫶🏻, i want ke aapdi rlsp ave etlij smooth chale jetla tara gaal che bub🤭….i miss you so fucking much i want to hug you so tightly hold your arms and just let you sleep on my shoulder forever(na but uthi jaje nitar pachi hu su karis🤔)…..ik ke koik ea aaiya tane bau herran kari che👹ane ave ej manas ik besharam modha jode fari ek vaar beg kare che ke baby pls maani jaa🙏🏻🙏🏻🙏🏻….let us dive into the world of happiness and love together and aa vakte forever. i am sorry for everything i did to you and am thankful for everything u did to me deshu🫵🏻🫵🏻🫵🏻🫶🏻🫶🏻🫶🏻
-
-Moreover let me say this to you maybe for the first time ever since we got together….the younger me👶🏻 never ever imagined to get a girl so pretty and gorgeous like you je ekdam mari care bhi karse and mane mari dar kareli khoti vastu mate tokse bhi🥰🥰🥰…but eventually ik ke ea mari jode hase jyare bhi kai hase mane💪🏻💪🏻……trust me i feel so freaking lucky to have you in my life🧿….tane bau badhi vakhat thatu hase ke aane mari value nathi ke aane mara efforts nathi dekhata but maybe idk how to show it and esp words ma kai rite idk but i will learn it all dw pan having you feels like 36 runs in an over or a clean sheet in the finals i mean all perfect💯💯💯…..last ma id like to ask one thing cutie….will you be my “girl”friend😙….. like sache vadu GIRLfriend…..yes bbg you will be the princess and the girl in the rlsp….and ofc my malkin😚😚😚😚 ohh yes and i want to pour chocolate milk in your dimples and drink it all😋😋</p>
+    <p>💌 Happy valentines honey 😘🥰… [text truncated]</p>
   </div>
 </div>
 
@@ -86,8 +96,11 @@ for (let i=0;i<10;i++){
   let h = document.createElement("div");
   h.className="heart";
   h.innerHTML="💙";
-  h.style.left=Math.random()*100+"vw";
-  h.style.top=Math.random()*100+"vh";
+  let w = window.innerWidth;
+  let hgt = window.innerHeight;
+  h.style.left = Math.random()*w + "px";
+  h.style.top = Math.random()*hgt + "px";
+  h.style.animation = `float ${4+Math.random()*3}s linear infinite`;
   document.body.appendChild(h);
 }
 
@@ -105,14 +118,17 @@ const noMsg = document.getElementById("noMsg");
 let grow = 1;
 let noMessages = ["Try again cutie", "Not today honey", "Almost!", "Better luck next time", "Nice try princess"];
 
-// Start question on mobile tap
-bestBtn.addEventListener("touchend", function(e){
-  e.preventDefault();
+// Start question screen (mobile & desktop)
+bestBtn.addEventListener("click", startQuestion);
+bestBtn.addEventListener("touchend", startQuestion, {passive:false});
+
+function startQuestion(e){
+  if(e.type === "touchend") e.preventDefault();
   intro.classList.remove("active");
   question.classList.add("active");
   music.volume = 0.3;
   music.play();
-}, {passive:false});
+}
 
 // NO button dodge
 function moveNoButton() {
@@ -123,21 +139,41 @@ function moveNoButton() {
   const maxX = window.innerWidth - noBtn.offsetWidth;
   const maxY = window.innerHeight - noBtn.offsetHeight;
 
-  noBtn.style.left = Math.random() * maxX + "px";
-  noBtn.style.top = Math.random() * maxY + "px";
+  noBtn.style.left = Math.random()*maxX + "px";
+  noBtn.style.top = Math.random()*maxY + "px";
 
   noMsg.innerText = noMessages[Math.floor(Math.random()*noMessages.length)];
 }
 
+noBtn.addEventListener("mouseenter", moveNoButton);
 noBtn.addEventListener("touchstart", moveNoButton, {passive:true});
 
 // YES button
-yesBtn.addEventListener("touchend", function(e){
-  e.preventDefault();
+yesBtn.addEventListener("click", showFinal);
+yesBtn.addEventListener("touchend", showFinal, {passive:false});
+
+function showFinal(e){
+  if(e.type === "touchend") e.preventDefault();
   question.classList.remove("active");
   final.classList.add("active");
-}, {passive:false});
+  confetti("💋");
+}
 
+// Confetti
+function confetti(emoji){
+  for(let i=0;i<20;i++){
+    let e = document.createElement("div");
+    e.innerHTML = emoji;
+    e.style.position="fixed";
+    e.style.left = Math.random()*window.innerWidth + "px";
+    e.style.top = "-10px";
+    e.style.fontSize = "24px";
+    e.style.pointerEvents = "none";
+    e.style.animation = "confettiFall 3s linear forwards";
+    document.body.appendChild(e);
+    setTimeout(()=>e.remove(),3000);
+  }
+}
 </script>
 </body>
 </html>
