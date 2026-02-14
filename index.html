@@ -7,15 +7,11 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-:root {
-  --vh: 1vh;
-}
-
 * { box-sizing:border-box; font-family:'Poppins', sans-serif; margin:0; padding:0; }
 
 html, body {
   width: 100%;
-  height: calc(var(--vh) * 100);
+  height: 100%;
   overflow: hidden;
 }
 
@@ -37,7 +33,6 @@ body {
   justify-content: center;
   text-align: center;
   padding: 20px;
-  height: calc(var(--vh) * 100);
 }
 
 .active { display: flex; }
@@ -74,7 +69,7 @@ body {
 @keyframes float {
   0% { transform: translateY(0); opacity:0; }
   20% { opacity:1; }
-  100% { transform: translateY(-calc(var(--vh) * 110)); opacity:0; }
+  100% { transform: translateY(-100vh); opacity:0; }
 }
 
 .card {
@@ -86,7 +81,7 @@ body {
 
 @keyframes confettiFall {
   0% { transform: translateY(-10px) rotate(0deg); }
-  100% { transform: translateY(calc(var(--vh) * 100)) rotate(360deg); }
+  100% { transform: translateY(100vh) rotate(360deg); }
 }
 </style>
 </head>
@@ -109,6 +104,7 @@ body {
 
 <div id="final" class="screen">
   <div class="card">
+<!-- FULL TEXT PRESERVED -->
 <p>Happy valentines honey😘🥰😘🥰…..i love you so fucking much and i can bet ke tane idea bhi nathi ke mane tu ketli game che deshu….i love you etlu badhu ke i can put my FOOD aside for you just to see you or talk to you(esp listen to you yap🙂‍↔️🙂‍↔️🙂‍↔️🙂‍↔️) you have been the perfect girlfriend and the person who is really like really really really bauj imp to me. without you my life is like cheesecake but no sugar😔….ramen but no spice😲….pizza but no cheese😠…..burger but no patty😵‍💫…..pasta but no olives😬….tara vagar it feels like pani puri but no sukha puri(everything incomplete🥲🥲🥲)</p>
 
 <p>This will be our 3rd valentine’s together and as they say teen teegda kaam bigda so i promise ke ave je kharab thavanu che ea thase aapda vache na badha obstacles jode🫣🫣🫣….misunderstanding patse, hu tari a-z vastuo sunis, ofc mari deshu will come first badhij vastuo ma, no selfish kavish,all love no hate, everything will be all good….since uk ke past 8-10 divas thi badhu fucked up che….enu let us patch up again baby🥹🥹🥹🥹🥹….i cannot see you hurt….please forgive me deshu and honestly answer me ke will you be my valentine sweetheart ?😙 i want to make you believe in love again🫶🏻, i want ke aapdi rlsp ave etlij smooth chale jetla tara gaal che bub🤭….i miss you so fucking much i want to hug you so tightly hold your arms and just let you sleep on my shoulder forever(na but uthi jaje nitar pachi hu su karis🤔)…..ik ke koik ea aaiya tane bau herran kari che👹ane ave ej manas ik besharam modha jode fari ek vaar beg kare che ke baby pls maani jaa🙏🏻🙏🏻🙏🏻….let us dive into the world of happiness and love together and aa vakte forever. i am sorry for everything i did to you and am thankful for everything u did to me deshu🫵🏻🫵🏻🫵🏻🫶🏻🫶🏻🫶🏻</p>
@@ -122,44 +118,57 @@ body {
 <audio id="boing" src="https://cdn.pixabay.com/audio/2022/03/15/audio_aa8d3c9f89.mp3"></audio>
 
 <script>
-// Fix mobile viewport height
-function setVH(){
-  let vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
+// MOBILE FULL HEIGHT FIX
+function setVh(){
+  document.querySelectorAll('.screen').forEach(s=>{
+    s.style.height = window.innerHeight + 'px';
+  });
 }
-setVH();
-window.addEventListener('resize', setVH);
+setVh();
+window.addEventListener('resize', setVh);
 
-// Elements
-const intro=document.getElementById("intro");
-const question=document.getElementById("question");
-const final=document.getElementById("final");
-const bestBtn=document.getElementById("bestBtn");
-const yesBtn=document.getElementById("yesBtn");
-const noBtn=document.getElementById("noBtn");
-const noMsg=document.getElementById("noMsg");
-const music=document.getElementById("music");
-const boing=document.getElementById("boing");
+// ELEMENTS
+const intro = document.getElementById("intro");
+const question = document.getElementById("question");
+const final = document.getElementById("final");
+const bestBtn = document.getElementById("bestBtn");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const noMsg = document.getElementById("noMsg");
+const music = document.getElementById("music");
+const boing = document.getElementById("boing");
 
 let grow=1;
 let noMessages=["Try again cutie","Not today honey","Almost!","Better luck next time","Nice try princess"];
 
-// Floating hearts full screen
+// HEARTS
 function createHearts(){
   const vw = window.innerWidth;
   const vh = window.innerHeight;
   for(let i=0;i<25;i++){
-    let h = document.createElement("div");
+    let h=document.createElement("div");
     h.className="heart";
     h.innerHTML="💙";
-    h.style.left = Math.random()*vw + "px";
-    h.style.animationDuration=(4 + Math.random()*3)+"s";
+    h.style.left = Math.random()*vw+"px";
+    h.style.animationDuration = (4+Math.random()*3)+"s";
     document.body.appendChild(h);
   }
 }
 createHearts();
 
-// First tap to unlock audio & show question
+// CONTINUOUS HEARTS
+setInterval(()=>{
+  const vw = window.innerWidth;
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💙";
+  h.style.left = Math.random()*vw+"px";
+  h.style.animationDuration = (4+Math.random()*3)+"s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),7000);
+},500);
+
+// START
 function startQuestion(e){
   e.preventDefault();
   intro.classList.remove("active");
@@ -176,7 +185,7 @@ function moveNoButton(){
   bestBtn.style.transform=`scale(${grow})`;
   noBtn.style.left=Math.random()*(window.innerWidth-noBtn.offsetWidth)+"px";
   noBtn.style.top=Math.random()*(window.innerHeight-noBtn.offsetHeight)+"px";
-  noMsg.innerText=noMessages[Math.floor(Math.random()*noMessages.length)];
+  noMsg.innerText = noMessages[Math.floor(Math.random()*noMessages.length)];
 }
 noBtn.addEventListener("mouseenter",moveNoButton);
 noBtn.addEventListener("touchstart",moveNoButton,{passive:true});
@@ -191,13 +200,13 @@ function showFinal(e){
 yesBtn.addEventListener("click",showFinal);
 yesBtn.addEventListener("touchend",showFinal,{passive:false});
 
-// Confetti
+// CONFETTI
 function confetti(emoji){
   for(let i=0;i<20;i++){
     let e=document.createElement("div");
-    e.innerHTML=emoji;
+    e.innerHTML = emoji;
     e.style.position="fixed";
-    e.style.left=Math.random()*window.innerWidth+"px";
+    e.style.left = Math.random()*window.innerWidth+"px";
     e.style.top="-10px";
     e.style.fontSize="24px";
     e.style.pointerEvents="none";
@@ -207,7 +216,7 @@ function confetti(emoji){
   }
 }
 
-// Update hearts on resize
+// HEARTS RESIZE
 window.addEventListener("resize", ()=>{
   document.querySelectorAll(".heart").forEach(h=>{
     h.style.left=Math.random()*window.innerWidth+"px";
