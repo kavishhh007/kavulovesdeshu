@@ -61,15 +61,10 @@ body {
 }
 
 .heart {
-  position:fixed;
-  font-size:22px;
-  bottom:-30px;
-  animation: float linear infinite;
-}
-@keyframes float {
-  0% { transform: translateY(0); opacity:0; }
-  20% { opacity:1; }
-  100% { transform: translateY(-100vh); opacity:0; }
+  position: absolute;
+  font-size: 22px;
+  bottom: 0;
+  will-change: transform;
 }
 
 .card {
@@ -77,11 +72,6 @@ body {
   padding:25px; border-radius:20px;
   max-width:90%; max-height:80%; overflow-y:auto;
   text-align:left;
-}
-
-@keyframes confettiFall {
-  0% { transform: translateY(-10px) rotate(0deg); }
-  100% { transform: translateY(100vh) rotate(360deg); }
 }
 </style>
 </head>
@@ -141,34 +131,46 @@ const boing = document.getElementById("boing");
 let grow=1;
 let noMessages=["Try again cutie","Not today honey","Almost!","Better luck next time","Nice try princess"];
 
-// HEARTS
+// FLOATING HEARTS FUNCTION
 function createHearts(){
   const vw = window.innerWidth;
   const vh = window.innerHeight;
   for(let i=0;i<25;i++){
-    let h=document.createElement("div");
+    let h = document.createElement("div");
     h.className="heart";
     h.innerHTML="💙";
-    h.style.left = Math.random()*vw+"px";
-    h.style.animationDuration = (4+Math.random()*3)+"s";
+    h.style.left = Math.random()*vw + "px";
+    h.style.bottom = "0px";
+    h.style.fontSize = (16+Math.random()*20)+"px";
     document.body.appendChild(h);
+    setTimeout(()=>{
+      h.style.transition = `transform ${4+Math.random()*3}s linear`;
+      h.style.transform = `translateY(-${vh+50}px)`;
+    },50);
+    setTimeout(()=>h.remove(),7500);
   }
 }
 createHearts();
 
-// CONTINUOUS HEARTS
+// CONTINUOUS FLOATING HEARTS
 setInterval(()=>{
   const vw = window.innerWidth;
-  let h=document.createElement("div");
+  const vh = window.innerHeight;
+  let h = document.createElement("div");
   h.className="heart";
   h.innerHTML="💙";
-  h.style.left = Math.random()*vw+"px";
-  h.style.animationDuration = (4+Math.random()*3)+"s";
+  h.style.left = Math.random()*vw + "px";
+  h.style.bottom = "0px";
+  h.style.fontSize = (16+Math.random()*20)+"px";
   document.body.appendChild(h);
-  setTimeout(()=>h.remove(),7000);
+  setTimeout(()=>{
+    h.style.transition = `transform ${4+Math.random()*3}s linear`;
+    h.style.transform = `translateY(-${vh+50}px)`;
+  },50);
+  setTimeout(()=>h.remove(),7500);
 },500);
 
-// START
+// START BUTTON
 function startQuestion(e){
   e.preventDefault();
   intro.classList.remove("active");
@@ -178,7 +180,7 @@ function startQuestion(e){
 bestBtn.addEventListener("click",startQuestion);
 bestBtn.addEventListener("touchend",startQuestion,{passive:false});
 
-// NO button dodge
+// NO BUTTON DODGE
 function moveNoButton(){
   boing.play();
   grow+=0.1;
@@ -190,7 +192,7 @@ function moveNoButton(){
 noBtn.addEventListener("mouseenter",moveNoButton);
 noBtn.addEventListener("touchstart",moveNoButton,{passive:true});
 
-// YES button
+// YES BUTTON
 function showFinal(e){
   e.preventDefault();
   question.classList.remove("active");
@@ -200,19 +202,31 @@ function showFinal(e){
 yesBtn.addEventListener("click",showFinal);
 yesBtn.addEventListener("touchend",showFinal,{passive:false});
 
-// CONFETTI
+// BEAUTIFUL CONFETTI FROM ALL TOP
 function confetti(emoji){
-  for(let i=0;i<20;i++){
-    let e=document.createElement("div");
-    e.innerHTML = emoji;
-    e.style.position="fixed";
-    e.style.left = Math.random()*window.innerWidth+"px";
-    e.style.top="-10px";
-    e.style.fontSize="24px";
-    e.style.pointerEvents="none";
-    e.style.animation="confettiFall 3s linear forwards";
-    document.body.appendChild(e);
-    setTimeout(()=>e.remove(),3000);
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+
+  for(let i=0;i<30;i++){
+    let c = document.createElement("div");
+    c.innerHTML = emoji;
+    c.style.position = "absolute";
+    c.style.left = Math.random() * vw + "px";
+    c.style.top = -30 + "px";
+    c.style.fontSize = 16 + Math.random()*16 + "px";
+    c.style.opacity = Math.random()*0.8 + 0.2;
+    c.style.transform = `rotate(${Math.random()*360}deg)`;
+    c.style.transition = "transform 3s linear, top 3s linear, opacity 3s linear";
+    document.body.appendChild(c);
+
+    setTimeout(()=>{
+      const rotateAmount = Math.random()*720-360;
+      c.style.top = vh + 50 + "px";
+      c.style.transform = `rotate(${rotateAmount}deg)`;
+      c.style.opacity = 0;
+    },50);
+
+    setTimeout(()=>c.remove(),3100);
   }
 }
 
