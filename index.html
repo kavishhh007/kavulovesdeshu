@@ -10,32 +10,32 @@
 * { box-sizing:border-box; font-family:'Poppins', sans-serif; margin:0; padding:0; }
 
 html, body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+  width:100%;
+  height:100%;
+  overflow:hidden;
 }
 
 body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg,#0f4c81,#4facfe);
-  color: white;
-  position: relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#0f4c81,#4facfe);
+  color:white;
+  position:relative;
 }
 
 .screen {
-  position: fixed;
-  inset: 0;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 20px;
+  position:fixed;
+  inset:0;
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:20px;
 }
 
-.active { display: flex; }
+.active { display:flex; }
 
 .btn {
   padding:14px 28px; border-radius:30px; border:none;
@@ -61,9 +61,8 @@ body {
 }
 
 .heart {
-  position: absolute;
-  font-size: 22px;
-  bottom: 0;
+  position:absolute;
+  font-size:22px;
   will-change: transform;
 }
 
@@ -108,11 +107,10 @@ body {
 <audio id="boing" src="https://cdn.pixabay.com/audio/2022/03/15/audio_aa8d3c9f89.mp3"></audio>
 
 <script>
-// MOBILE FULL HEIGHT FIX
+// MOBILE FULL HEIGHT
 function setVh(){
-  document.querySelectorAll('.screen').forEach(s=>{
-    s.style.height = window.innerHeight + 'px';
-  });
+  const vh = window.innerHeight;
+  document.querySelectorAll('.screen').forEach(s => s.style.height = vh + 'px');
 }
 setVh();
 window.addEventListener('resize', setVh);
@@ -131,44 +129,29 @@ const boing = document.getElementById("boing");
 let grow=1;
 let noMessages=["Try again cutie","Not today honey","Almost!","Better luck next time","Nice try princess"];
 
-// FLOATING HEARTS FUNCTION
-function createHearts(){
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
-  for(let i=0;i<25;i++){
-    let h = document.createElement("div");
-    h.className="heart";
-    h.innerHTML="💙";
-    h.style.left = Math.random()*vw + "px";
-    h.style.bottom = "0px";
-    h.style.fontSize = (16+Math.random()*20)+"px";
-    document.body.appendChild(h);
-    setTimeout(()=>{
-      h.style.transition = `transform ${4+Math.random()*3}s linear`;
-      h.style.transform = `translateY(-${vh+50}px)`;
-    },50);
-    setTimeout(()=>h.remove(),7500);
-  }
-}
-createHearts();
-
-// CONTINUOUS FLOATING HEARTS
-setInterval(()=>{
+// FLOATING HEARTS
+function createHeart(){
   const vw = window.innerWidth;
   const vh = window.innerHeight;
   let h = document.createElement("div");
-  h.className="heart";
-  h.innerHTML="💙";
+  h.className = "heart";
+  h.innerHTML = "💙";
   h.style.left = Math.random()*vw + "px";
-  h.style.bottom = "0px";
-  h.style.fontSize = (16+Math.random()*20)+"px";
+  h.style.top = vh + "px";
+  h.style.fontSize = (16 + Math.random()*20) + "px";
   document.body.appendChild(h);
+
   setTimeout(()=>{
-    h.style.transition = `transform ${4+Math.random()*3}s linear`;
-    h.style.transform = `translateY(-${vh+50}px)`;
+    h.style.transition = `top ${4+Math.random()*3}s linear`;
+    h.style.top = "-50px";
   },50);
+
   setTimeout(()=>h.remove(),7500);
-},500);
+}
+
+// initial hearts
+for(let i=0;i<25;i++) createHeart();
+setInterval(createHeart,500);
 
 // START BUTTON
 function startQuestion(e){
@@ -180,7 +163,7 @@ function startQuestion(e){
 bestBtn.addEventListener("click",startQuestion);
 bestBtn.addEventListener("touchend",startQuestion,{passive:false});
 
-// NO BUTTON DODGE
+// NO BUTTON
 function moveNoButton(){
   boing.play();
   grow+=0.1;
@@ -202,25 +185,24 @@ function showFinal(e){
 yesBtn.addEventListener("click",showFinal);
 yesBtn.addEventListener("touchend",showFinal,{passive:false});
 
-// BEAUTIFUL CONFETTI FROM ALL TOP
+// CONFETTI
 function confetti(emoji){
   const vw = window.innerWidth;
   const vh = window.innerHeight;
-
   for(let i=0;i<30;i++){
     let c = document.createElement("div");
     c.innerHTML = emoji;
     c.style.position = "absolute";
-    c.style.left = Math.random() * vw + "px";
-    c.style.top = -30 + "px";
-    c.style.fontSize = 16 + Math.random()*16 + "px";
+    c.style.left = Math.random()*vw + "px";
+    c.style.top = "-30px";
+    c.style.fontSize = (16+Math.random()*16)+"px";
     c.style.opacity = Math.random()*0.8 + 0.2;
     c.style.transform = `rotate(${Math.random()*360}deg)`;
-    c.style.transition = "transform 3s linear, top 3s linear, opacity 3s linear";
     document.body.appendChild(c);
 
     setTimeout(()=>{
       const rotateAmount = Math.random()*720-360;
+      c.style.transition = "top 3s linear, transform 3s linear, opacity 3s linear";
       c.style.top = vh + 50 + "px";
       c.style.transform = `rotate(${rotateAmount}deg)`;
       c.style.opacity = 0;
@@ -229,13 +211,6 @@ function confetti(emoji){
     setTimeout(()=>c.remove(),3100);
   }
 }
-
-// HEARTS RESIZE
-window.addEventListener("resize", ()=>{
-  document.querySelectorAll(".heart").forEach(h=>{
-    h.style.left=Math.random()*window.innerWidth+"px";
-  });
-});
 </script>
 </body>
 </html>
